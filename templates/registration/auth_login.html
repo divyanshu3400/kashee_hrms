@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kashee HRMS|Login</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="#">
+    <meta name="keywords"
+        content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="#">
+    <link rel="icon" href="{% static 'files/assets/images/favicon.ico' %}" type="image/x-icon" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'files/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/icon/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/icon/icofont/css/icofont.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/style.css' %}">
+    
+    <style>
+        /* Styles for the loader */
+        #loader-wrapper {
+          display: none;
+          position: fixed;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5); /* Light black background */
+        }
+        
+        .loader-block {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          color: white; /* Adjust text color */
+        }
+        /* Styles for floating alerts container */
+        .floating-alerts-container {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 9999; /* Ensure it's above other content */
+        }
+        
+        /* Styles for individual floating alert */
+        .float-alert {
+          opacity: 0;
+          animation: floatAlert 5s ease forwards;
+        }
+        
+        @keyframes floatAlert {
+          0% {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      </style>
+</head>
+
+<body class="fix-menu">
+
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class="contain">
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="login-block">
+        <div class="floating-alerts-container">
+            {% if messages %}
+              <div class="col-12">
+                {% for message in messages %}
+                  {% if message.tags == 'error' %}
+                    <div class="alert alert-danger border-danger float-alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="icofont icofont-close-line-circled"></i></button>
+                      <strong>{{ message }}</strong>
+                    </div>
+                  {% endif %}
+                  {% if message.tags == 'success' %}
+                    <div class="alert alert-success border-success float-alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="icofont icofont-close-line-circled"></i></button>
+                      <strong>{{ message }}</strong>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form action="/doLogin" method="post" id="demo-form" class="md-float-material form-material">
+                        {% csrf_token %}
+                        <div class="text-center">
+                            <img src="{% static 'files/assets/images/logo.png' %}" alt="logo.png">
+                        </div>
+                        <div class="auth-box card">
+                            <div class="card-block">
+                                <div class="row m-b-20">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">Sign In to Kashee HRMS</h3>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary">
+                                    <input type="text" name="email" class="form-control" required
+                                        placeholder="Your Email Address">
+                                    <span class="form-bar"></span>
+                                </div>
+                                <div class="form-group form-primary">
+                                    <input type="password" name="password" class="form-control" required
+                                        placeholder="Password">
+                                    <span class="form-bar"></span>
+                                </div>
+                                {% comment %} <div class="input-group mb-3">
+                                    <div class="g-recaptcha" data-sitekey="6LfqmUcpAAAAAJqrx5fwIdkDPxca6kwoNZTZ1D9s"></div>
+                                  </div> {% endcomment %}
+                                <div class="row m-t-30">
+                                    <div class="col-md-12">
+                                        <button type="submit"
+                                            class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Sign
+                                            in</button>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <p class="text-inverse text-left m-b-0">Thank you.</p>
+                                        <p class="text-inverse text-left"><a
+                                                href="{% url 'password_reset' %}"><b
+                                                    class="f-w-600">Forgot Password?</b></a></p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img src="{% static 'files/assets/images/logo-small.png' %}"
+                                            alt="small-logo.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                
+
+                    </form>
+            
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script type="text/javascript" src="{% static 'files/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'files/bower_components/jquery-ui/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'files/bower_components/popper.js' %}/dist/umd/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'files/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+    <script type="text/javascript"  src="{% static 'files/bower_components/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'files/bower_components/modernizr/modernizr.js' %}"></script>
+    <script type="text/javascript" src="{% static 'files/bower_components/modernizr/feature-detects/css-scrollbars.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'files/bower_components/i18next/i18next.min.js' %}"></script>
+    <script type="text/javascript"  src="{% static 'files/bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js' %}"></script>
+    <script type="text/javascript"  src="{% static 'files/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js' %}"></script>
+    <script type="text/javascript"   src="{% static 'files/bower_components/jquery-i18next/jquery-i18next.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'files/assets/js/common-pages.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        $(document).ready(function () {
+          $('.float-alert').each(function (index) {
+            $(this)
+              .delay(500 * index)
+              .queue(function () {
+                $(this).addClass('float-alert')
+                $(this).dequeue()
+              })
+          })
+          function showLoader() {
+            $('#loader-wrapper').fadeIn('fast')
+            setTimeout(hideLoader, 3000);
+          }
+          function hideLoader() {
+            $('#loader-wrapper').fadeOut('fast')
+          }
+          $('#submitButton').on('click', function (event) {
+            showLoader()
+          })
+          $(document).on('keypress', function (event) {
+            if (event.keyCode === 13) {
+              // 13 is the Enter key code
+              showLoader()
+            }
+          })
+        })
+      </script>
+</body>
+
+</html>

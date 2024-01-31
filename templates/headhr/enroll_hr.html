@@ -1,0 +1,219 @@
+{% extends 'headhr/base_template.html' %}
+{% load static %}
+
+{% block xtra_css %}
+  <link rel="stylesheet" href="{% static 'files/bower_components/select2/dist/css/select2.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/multiselect/css/multi-select.css' %}" />
+{% endblock %}
+{% block main_content %}
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="page-header">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h4>{{ msg }} Enrollment</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'super_admin_home' %}"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'super_admin_home' %}">Dashboard</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>{{ msg }} Details</h5>
+                    <span>Note: <i>All fields marked with <b style="color: red;">*</b> are mandatory.</i></span>
+                  </div>
+                  <div class="card-block">
+                    <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label for="{{ form.department.id_for_label }}">Select Department <span style="color: red;">*</span> :</label>
+                          {{ form.department }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-4">
+                          <label for="{{ form.role.id_for_label }}">Select Role <span style="color: red;">*</span> :</label>
+                          {{ form.role }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-4">
+                          <label for="{{ form.reporting_manager.id_for_label }}">Select Reporting Manager :</label>
+                          {{ form.reporting_manager }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.first_name.id_for_label }}">Enter First Name <span style="color: red;">*</span> :</label>
+                          {{ form.first_name }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.last_name.id_for_label }}">Enter Last Name <span style="color: red;">*</span> :</label>
+                          {{ form.last_name }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.gender.id_for_label }}">Select Gender <span style="color: red;">*</span> :</label>
+                          {{ form.gender }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.emp_code.id_for_label }}">Enter Employee Code (if available) :</label>
+                          {{ form.emp_code }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.designation.id_for_label }}">Select Designation <span style="color: red;">*</span> :</label>
+                          {{ form.designation }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.email.id_for_label }}">Enter Email <span style="color: red;">*</span>:</label>
+                          {{ form.email }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.martial_status.id_for_label }}">Select Martial Status <span style="color: red;">*</span> :</label>
+                          {{ form.martial_status }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.anniversary.id_for_label }}">Enter Anniversary:</label>
+                          {{ form.anniversary }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.dob.id_for_label }}">Enter Date Of Birth <span style="color: red;">*</span> :</label>
+                          {{ form.dob }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.date_of_joining.id_for_label }}">Enter Joining Date:<span style="color: red;">*</span> :</label>
+                          {{ form.date_of_joining }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.phone_number.id_for_label }}">Mobile Number: <span style="color: red;">*</span> :</label>
+                          {{ form.phone_number }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.shift.id_for_label }}">Select Shift: <span style="color: red;">*</span> :</label>
+                          {{ form.shift }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      {% comment %} <div class="form-group row">
+                        <label for="{{ form.image.id_for_label }}" class="col-sm-2 col-form-label">Profile Image</label>
+                        <div class="col-sm-10">
+                          {{ form.image }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div> {% endcomment %}
+                      <div class="card-header">
+                        <h5>Address Details</h5>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.address_line_1.id_for_label }}">Enter Address Line 1 <span style="color: red;">*</span> :</label>
+                          {{ form.address_line_1 }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.address_line_2.id_for_label }}">Enter Address Line 2<span style="color: red;">*</span> :</label>
+                          {{ form.address_line_2 }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.state.id_for_label }}">Enter State<span style="color: red;">*</span> :</label>
+                          {{ form.state }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label for="{{ form.district.id_for_label }}">Enter District<span style="color: red;">*</span> :</label>
+                          {{ form.district }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.country.id_for_label }}">Enter Country <span style="color: red;">*</span> :</label>
+                          {{ form.country }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.zip_code.id_for_label }}">Enter Zip Code <span style="color: red;">*</span> :</label>
+                          {{ form.zip_code }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-10">
+                          <button type="submit" id="submitButton"  class="btn btn-primary m-b-0">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block xtra_js %}
+  <script type="text/javascript" src="{% static 'files/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/bower_components/multiselect/js/jquery.multi-select.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/js/jquery.quicksearch.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/pages/advance-elements/select2-custom.js' %}"></script>
+{% endblock %}

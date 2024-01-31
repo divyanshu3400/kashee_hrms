@@ -1,0 +1,133 @@
+{% extends 'employee/base_template.html' %}
+
+{% load static %}
+
+{% block main_content %}
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="page-header">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h4></h4>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href=""><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Tour Details</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="personal" role="tabpanel">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-header-text">Tour Details</h5>
+                      </div>
+                      <div class="card-block">
+                        <div class="view-info">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <div class="general-info">
+                                <div class="row">
+                                  <div class="col-lg-12 col-xl-6">
+                                    <div class="table-responsive">
+                                      <table class="table m-0">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">Title</th>
+                                            <td>{{ tour_details.title }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Start Date</th>
+                                            <td>{{ tour_details.start_date }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Visit</th>
+                                            <td>
+                                              {% if tour_details.is_completed %}
+                                                Completed
+                                              {% else %}
+                                                Uncomplete
+                                              {% endif %}
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-12 col-xl-6">
+                                    <div class="table-responsive">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">Destination</th>
+                                            <td>{{ tour_details.destination }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Estimated End Date</th>
+                                            <td>{{ tour_details.end_date }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Completion Date</th>
+                                            <td>{{ tour_details.completion_date }}</td>
+                                          </tr>
+
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="container">
+                          <h6><b>Message</b></h6>
+                        </div>
+                        <div class="container">
+                          <p>{{ tour_details.message }}</p>
+                        </div>
+                      </div>
+                      <div class="card-header">
+                        <h5 class="card-header-text">Tour Bill</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include 'employee/footer.html' %}
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block xtra_js %}
+  <script type="text/javascript" src="{% static 'files/assets/pages/dashboard/analytic-dashboard.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/user-profile.js' %}"></script>
+{% endblock %}

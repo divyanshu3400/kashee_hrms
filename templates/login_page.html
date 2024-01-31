@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kashee HRMS | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}" />
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
+    
+    <style>
+      /* Styles for the loader */
+      #loader-wrapper {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Light black background */
+      }
+      
+      .loader-block {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white; /* Adjust text color */
+      }
+      /* Styles for floating alerts container */
+      .floating-alerts-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999; /* Ensure it's above other content */
+      }
+      
+      /* Styles for individual floating alert */
+      .float-alert {
+        opacity: 0;
+        animation: floatAlert 5s ease forwards;
+      }
+      
+      @keyframes floatAlert {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href=""><b>Kashee <hr></b>Human Resource Management System</a>
+      </div>
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">Sign in to Human Resource Management System</p>
+
+          <form action="/doLogin" method="post" id="demo-form">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" placeholder="Email" name="email" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Password" name="password" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="g-recaptcha" data-sitekey="6LeWtqUZAAAAAMO6YmxX5_XWel9hLWrb_iEiff26"></div>
+            </div>
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-12">
+                <button type="submit" id="submitButton" class="btn btn-primary btn-block">Sign In</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- /.social-auth-links -->
+        </div>
+        <!-- /.login-card-body -->
+      </div>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      $(document).ready(function () {
+        $('.float-alert').each(function (index) {
+          $(this)
+            .delay(500 * index)
+            .queue(function () {
+              $(this).addClass('float-alert')
+              $(this).dequeue()
+            })
+        })
+        function showLoader() {
+          $('#loader-wrapper').fadeIn('fast')
+          setTimeout(hideLoader, 3000);
+        }
+        function hideLoader() {
+          $('#loader-wrapper').fadeOut('fast')
+        }
+        $('#submitButton').on('click', function (event) {
+          showLoader()
+        })
+        $(document).on('keypress', function (event) {
+          if (event.keyCode === 13) {
+            // 13 is the Enter key code
+            showLoader()
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

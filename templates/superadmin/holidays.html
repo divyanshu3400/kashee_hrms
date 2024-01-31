@@ -1,0 +1,143 @@
+{% extends 'superadmin/base_template.html' %}
+{% load static %}
+
+{% block xtra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/assets/pages/data-table/css/buttons.dataTables.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/assets/pages/data-table/extensions/autofill/css/autoFill.dataTables.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/assets/pages/data-table/extensions/autofill/css/select.dataTables.min.css' %}" />
+{% endblock %}
+
+{% block main_content %}
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="page-header">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <div class="card-block">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'hrhead_home' %}"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'hrhead_home' %}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Holidays</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Total HRs</h5>
+                    <div class="card-header-right">
+                      <ul class="list-unstyled card-option">
+                        <li>
+                          <i class="feather icon-maximize full-card"></i>
+                        </li>
+                        <li>
+                          <i class="feather icon-minus minimize-card"></i>
+                        </li>
+                        <li>
+                          <i class="feather icon-trash-2 close-card"></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <div class="dt-responsive table-responsive">
+                      <table id="colum-select" class="table table-striped table-bordered nowrap">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Holidays</th>
+                            <th>Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for holiday in holidays %}
+                            <tr>
+                              <td></td>
+                              <td>{{ holiday.id }}</td>
+                              <td>{{ holiday.name }}</td>
+                              <td>{{ holiday.date }}</td>
+                              <td><a class="btn " href="{% url 'admin_edit_holiday' holiday.id %}"><i class="text-success icofont icofont-ui-edit"></i></a></td>
+                              <td><a class="btn " href="{% url 'admin_edit_holiday' holiday.id %}"><i class="text-danger icofont icofont-ui-delete"></i></a></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Holidays</th>
+                            <th>Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label for="{{ form.file.id_for_label }}">Holidays List(.xlxs) <span style="color: red;">*</span> :</label>
+                    {{ form.file }}
+                    <span class="messages popover-valid"></span>
+                  </div>
+                  <div class="col-sm-3">
+                    <button type="submit" id="submitButton" class="btn btn-primary m-b-0">Submit</button>
+                    <span class="messages popover-valid"></span>
+                  </div>
+                </div>                        
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block xtra_js %}
+  <script src="{% static 'files/bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/js/jszip.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/js/pdfmake.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/js/vfs_fonts.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/extensions/autofill/js/dataTables.autoFill.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/extensions/autofill/js/dataTables.select.min.js' %}"></script>
+  <script src="{% static 'files/bower_components/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+  <script src="{% static 'files/bower_components/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/js/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+  <script src="{% static 'files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/data-table/extensions/autofill/js/extensions-custom.js' %}"></script>
+{% endblock %}

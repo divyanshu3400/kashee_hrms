@@ -1,0 +1,92 @@
+{% load static %}
+<nav  class="pcoded-navbar">
+  <div  class="pcoded-inner-navbar main-menu">
+    <div class="pcoded-navigatio-lavel">Employee Login</div>
+    <ul class="pcoded-item pcoded-left-item">
+      {% url 'employee_home' as employee_home %}
+      {% url 'employee_profile' as employee_profile %}
+      <li class="pcoded-hasmenu {% if request.path == employee_home %}active pcoded-trigger{% endif %}
+      {% if request.path == employee_profile %}active pcoded-trigger{% endif %}">
+        <a href="javascript:void(0)">
+          <span class="pcoded-micon"><i class="icofont icofont-home"></i></span>
+          <span class="pcoded-mtext">Dashboard</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li class="{% if request.path == employee_home %}active{% endif %} ">
+            <a href="{{ employee_home }}"><span class="pcoded-mtext">Dashboard</span></a>
+          </li>
+          <li class="{% if request.path == employee_profile %}active{% endif %} ">
+            <a href="{{ employee_profile }}"><span class="pcoded-mtext">Profile</span></a>
+          </li>
+        </ul>
+      </li>
+
+      {% url 'emp_apply_leaves' as emp_apply_leaves %}
+      <li class="{% if request.path == emp_apply_leaves %}active{% endif %}">
+        <a href="{{ emp_apply_leaves }}">
+          <span class="pcoded-micon"><i class="feather icon-edit"></i></span>
+          <span class="pcoded-mtext">Apply Leave</span>
+        </a>
+      </li>
+
+      {% url 'emp_apply_tour' as emp_apply_tour %}
+      <li class="{% if request.path == emp_apply_tour %}active{% endif %}">
+        <a href="{{ emp_apply_tour }}">
+          <span class="pcoded-micon"><i class="feather icon-edit"></i></span>
+          <span class="pcoded-mtext">Apply Tour</span>
+        </a>
+      </li>
+
+      {% url 'emp_tours' as emp_tours %}
+      <li class="{% if request.path == emp_tours %}active{% endif %}">
+        <a href="{{ emp_tours }}">
+          <span class="pcoded-micon"><i class="icofont icofont-travelling"></i></span>
+          <span class="pcoded-mtext">Appllied Tours</span>
+        </a>
+      </li>
+
+      {% if emp.is_reporting_manager %}
+        {% url 'requested_leaves' as requested_leaves %}
+        <li class="{% if request.path == requested_leaves %}active{% endif %}">
+          <a href="{{ requested_leaves }}">
+            <span class="pcoded-micon"><i class="icofont icofont-prescription"></i></span>
+            <span class="pcoded-mtext">Requested Leaves</span>
+          </a>
+        </li>
+        
+        {% url 'remp_req_regularization' as remp_req_regularization %}
+        <li class="{% if request.path == remp_req_regularization %}active{% endif %}">
+          <a href="{{remp_req_regularization}}">
+            <span class="pcoded-micon"><i class="icofont icofont-travelling"></i></span>
+            <span class="pcoded-mtext">Requested Regularizations</span>
+          </a>
+        </li>  
+      {% endif %}
+
+      {% url 'emp_attendance' as emp_attendance %}
+      <li class="{% if request.path == emp_attendance %}active{% endif %}">
+        <a href="{{ emp_attendance }}">
+          <span class="pcoded-micon"><i class="icofont icofont-ui-calendar"></i></span>
+          <span class="pcoded-mtext">My Attendance</span>
+        </a>
+      </li>
+
+      {% url 'emp_regularization_list' as emp_regularization_list %}
+      <li class="{% if request.path == emp_regularization_list %}active{% endif %}">
+        <a href="{{ emp_regularization_list }}">
+          <span class="pcoded-micon"><i class="icofont icofont-ui-calendar"></i></span>
+          <span class="pcoded-mtext">My Regularizations</span>
+        </a>
+      </li>
+
+
+      {% url 'emp_leaves' as emp_leaves %}
+      <li class="{% if request.path == emp_leaves %}active{% endif %}">
+        <a href="{{ emp_leaves }}">
+          <span class="pcoded-micon"><i class="icofont icofont-calendar"></i></span>
+          <span class="pcoded-mtext">My Leaves</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

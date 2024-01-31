@@ -1,0 +1,89 @@
+{% extends 'superadmin/base_template.html' %}
+{% load static %}
+
+{% block main_content %}
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="page-header">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h4>Shift Timing</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'hrhead_home' %}"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'hrhead_home' %}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Shift Timing</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Shift Timing</h5>
+                  </div>
+                  <div class="card-block">
+                    <form method="post">
+                      {% csrf_token %}
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label>Shift Start Timing</label>
+                          <div class="input-group timepicker">
+                            {{ form.start_time }}
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="la la-clock-o"></i></span>
+                            </div>
+                            <span class="messages popover-valid"></span>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <label>Shift End Timing</label>
+                          <div class="input-group timepicker">
+                            {{ form.end_time }}
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="la la-clock-o"></i></span>
+                            </div>
+                            <span class="messages popover-valid"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Grace Time:</label>
+                        {{ form.grace_time }}
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-10">
+                          <button type="submit" id="submitButton" class="btn btn-primary m-b-0">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+{% endblock %}

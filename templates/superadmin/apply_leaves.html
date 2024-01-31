@@ -1,0 +1,104 @@
+{% extends 'superadmin/base_template.html' %}
+{% load static %}
+
+{% block xtra_css %}
+  <link rel="stylesheet" href="{% static 'files/bower_components/select2/dist/css/select2.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/multiselect/css/multi-select.css' %}" />
+{% endblock %}
+{% block main_content %}
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="page-header">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h4>Human Resource Enrollment</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'hrhead_home' %}"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="{% url 'hrhead_home' %}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Enroll Hr</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>HR Details</h5>
+                    <span>Note: <i>All fields marked with <b style="color: red;">*</b> are mandatory.</i></span>
+                  </div>
+                  <div class="card-block">
+                    <form method="post">
+                      {% csrf_token %}
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.leave_type.id_for_label }}">Select Leave Type <span style="color: red;">*</span> :</label>
+                          {{ form.leave_type }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label for="{{ form.start_date.id_for_label }}">Select Start Date<span style="color: red;">*</span> :</label>
+                          {{ form.start_date }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="{{ form.end_date.id_for_label }}">Select End Date:<span style="color: red;">*</span> :</label>
+                          {{ form.end_date }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label for="{{ form.reason.id_for_label }}">Enter Reason<span style="color: red;">*</span> :</label>
+                          {{ form.reason }}
+                          <span class="messages popover-valid"></span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-10">
+                          <button type="submit" id="submitButton" class="btn btn-primary m-b-0">Save</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block xtra_js %}
+  <script type="text/javascript" src="{% static 'files/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/bower_components/multiselect/js/jquery.multi-select.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/js/jquery.quicksearch.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/pages/advance-elements/select2-custom.js' %}"></script>
+{% endblock %}

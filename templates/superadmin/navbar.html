@@ -1,0 +1,138 @@
+{% load static %}
+<nav class="navbar header-navbar pcoded-header">
+    <div class="navbar-wrapper">
+      <div class="navbar-logo">
+        <a class="mobile-menu" id="mobile-collapse" href="#!"><i class="feather icon-menu"></i></a>
+        <a data-toggle="modal" data-target="#logoModal"><img style="max-width: 50%; height: auto;" 
+          src=" {% if logo %}{{logo.logo_image.url}} {% else %}{% static 'files/assets/images/logo.png' %}{% endif %}" alt="kashee_logo" /></a>
+        <a class="mobile-options"><i class="feather icon-more-horizontal"></i></a>
+      </div>
+      <div class="navbar-container">
+        <ul class="nav-left">
+          <li class="header-search">
+            <div class="main-search morphsearch-search">
+              <div class="input-group">
+                <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
+                <input type="text" class="form-control" />
+                <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="#!" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize full-screen"></i></a>
+          </li>
+        </ul>
+        <ul class="nav-right">
+          <li class="header-notification">
+            <div class="dropdown-primary dropdown">
+              <div class="dropdown-toggle" data-toggle="dropdown">
+                <i class="feather icon-bell"></i>
+                <span class="badge bg-c-pink">5</span>
+              </div>
+              <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                <li>
+                  <h6>Notifications</h6>
+                  <label class="label label-danger">New</label>
+                </li>
+                <li>
+                  <div class="media">
+                    <img class="d-flex align-self-center img-radius" src="{% static 'files/assets/images/avatar-4.jpg' %}" alt="Generic placeholder image" />
+                    <div class="media-body">
+                      <h5 class="notification-user">John Doe</h5>
+                      <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                      <span class="notification-time">30 minutes ago</span>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="media">
+                    <img class="d-flex align-self-center img-radius" src="{% static 'files/assets/images/avatar-3.jpg' %}" alt="Generic placeholder image" />
+                    <div class="media-body">
+                      <h5 class="notification-user">Joseph William</h5>
+                      <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                      <span class="notification-time">30 minutes ago</span>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="media">
+                    <img class="d-flex align-self-center img-radius" src="{% static 'files/assets/images/avatar-4.jpg' %}" alt="Generic placeholder image" />
+                    <div class="media-body">
+                      <h5 class="notification-user">Sara Soudein</h5>
+                      <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                      <span class="notification-time">30 minutes ago</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          {% comment %} <li class="header-notification">
+            <div class="dropdown-primary dropdown">
+              <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
+                <i class="feather icon-message-square"></i>
+                <span class="badge bg-c-green">3</span>
+              </div>
+            </div>
+          </li> {% endcomment %}
+          <li class="user-profile header-notification">
+            <div class="dropdown-primary dropdown">
+              <div class="dropdown-toggle" data-toggle="dropdown">
+                <img src="{% static 'files/assets/images/avatar-4.jpg' %}" class="img-radius" alt="User-Profile-Image" />
+                <span>{% if request.user.first_name %}{{request.user.first_name}}  {{request.user.last_name}}
+                  {% else %}
+                  {{request.user.username}}
+                  {% endif %}</span>
+                <i class="feather icon-chevron-down"></i>
+              </div>
+              <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">                
+                <li>
+                  <a href="{% url 'hrhead_profile' %}"><i class="feather icon-user"></i> Profile</a>
+                </li>
+                <li>
+                  <a href="{% url 'head_apply_leaves' %}"><i class="feather icon-mail"></i>Apply Leaves</a>
+                </li>
+                <li>
+                  <a href="{% url 'head_attendance' %}"><i class="feather icon-lock"></i>My Attendance</a>
+                </li>
+                <li>
+                  <a href="{% url 'head_attendance' %}"><i class="feather icon-lock"></i>My Leaves</a>
+                </li>
+                <li>
+                  <a href="{% url 'admin_change_password' %}"><i class="icofont icofont-ui-password"></i> Change Password</a>
+                </li>                
+                <li>
+                  <a href="{% url 'logout' %}"><i class="feather icon-log-out"></i> Logout</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!-- Modal -->
+<div class="modal fade" id="logoModal" tabindex="-1" role="dialog" aria-labelledby="logoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoModalLabel">Update Logo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Note: Image size must be 50 X 50</p>
+        <form method="post"  action="{% url 'sadmin_update_logo' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ logo_form.as_p }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>

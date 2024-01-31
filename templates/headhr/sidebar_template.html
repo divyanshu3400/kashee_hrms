@@ -1,0 +1,151 @@
+{% load static %}
+<nav class="pcoded-navbar">
+  <div class="pcoded-inner-navbar main-menu">
+    <div class="pcoded-navigatio-lavel">Head HR Login</div>
+    <ul class="pcoded-item pcoded-left-item">
+      {% url 'hrhead_home' as hrhead_home %}
+      {% url 'hrhead_dashboard' as hrhead_dashboard %}
+      {% url 'hrhead_profile' as hrhead_profile %}
+      <li class="pcoded-hasmenu {% if request.path == hrhead_home %}active pcoded-trigger{% endif %}
+      {% if request.path == hrhead_dashboard %}active pcoded-trigger{% endif %}
+      {% if request.path == hrhead_profile %}active pcoded-trigger{% endif %} ">
+        <a href="javascript:void(0)">
+          <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+          <span class="pcoded-mtext">Dashboard</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li class="{% if request.path == hrhead_home %}active{% endif %} ">
+            <a href="{{ hrhead_home }}"><span class="pcoded-mtext">Dashboard</span></a>
+          </li>
+          <li class="{% if request.path == hrhead_dashboard %}active{% endif %} ">
+            <a href="{{ hrhead_dashboard }}"><span class="pcoded-mtext">Home</span></a>
+          </li>
+          <li class="{% if request.path == hrhead_profile %}active{% endif %} ">
+            <a href="{{ hrhead_profile }}"><span class="pcoded-mtext">Profile</span></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="pcoded-item pcoded-left-item">
+      {% url 'head_enroll_rm' as head_enroll_rm %}
+      {% url 'enroll_hr' as enroll_hr %}
+      <li class="pcoded-hasmenu
+      {% if request.path == head_enroll_rm %}active pcoded-trigger{% endif %}
+      {% if request.path == enroll_hr %}active pcoded-trigger{% endif %}">
+        <a href="javascript:void(0)">
+          <span class="pcoded-micon"><i class="icofont icofont-contact-add"></i></span>
+          <span class="pcoded-mtext">Enrollments</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li class="{% if request.path == head_enroll_rm %}active{% endif %}">
+            <a href="{{ head_enroll_rm }}"><span class="pcoded-mtext">Enroll Employee</span></a>
+          </li>
+          <li class="{% if request.path == enroll_hr %}active{% endif %}">
+            <a href="{{ enroll_hr }}"><span class="pcoded-mtext">Enroll HR</span></a>
+          </li>
+        </ul>
+      </li>
+      {% url 'head_requested_leaves' as head_requested_leaves %}
+      <li class="{% if request.path == head_requested_leaves %}active{% endif %}">
+        <a href="{{ head_requested_leaves }}">
+          <span class="pcoded-micon"><i class="icofont icofont-ui-calendar"></i></span>
+          <span class="pcoded-mtext">Requested Leaves</span>
+        </a>
+      </li>
+
+      {% url 'head_requested_tour' as head_requested_tour %}
+      <li class="{% if request.path == head_requested_tour %}active{% endif %}">
+        <a href="{{head_requested_tour}}">
+          <span class="pcoded-micon"><i class="icofont icofont-travelling"></i></span>
+          <span class="pcoded-mtext">Requested Tours</span>
+        </a>
+      </li>
+
+
+      {% url 'head_applied_tour' as head_applied_tour %}
+      <li class="{% if request.path == head_applied_tour %}active{% endif %}">
+        <a href="{{head_applied_tour}}">
+          <span class="pcoded-micon"><i class="icofont icofont-travelling"></i></span>
+          <span class="pcoded-mtext">Applied Tours</span>
+        </a>
+      </li>
+
+      {% if emp.is_reporting_manager %}
+      {% url 'rmhead_requested_tour' as rmhead_requested_tour %}
+      <li class="{% if request.path == rmhead_requested_tour %}active{% endif %}">
+        <a href="{{ rmhead_requested_tour }}">
+          <span class="pcoded-micon"><i class="icofont icofont-prescription"></i></span>
+          <span class="pcoded-mtext">Tour Requests</span>
+        </a>
+      </li>
+ 
+      {% url 'rmhead_requested_leave' as rmhead_requested_leave %}
+      <li class="{% if request.path == rmhead_requested_leave %}active{% endif %}">
+        <a href="{{ rmhead_requested_leave }}">
+          <span class="pcoded-micon"><i class="icofont icofont-prescription"></i></span>
+          <span class="pcoded-mtext">Leave Requests</span>
+        </a>
+      </li>
+ 
+      {% url 'rmhead_requested_regs' as rmhead_requested_regs %}
+      <li class="{% if request.path == rmhead_requested_regs %}active{% endif %}">
+        <a href="{{rmhead_requested_regs}}">
+          <span class="pcoded-micon"><i class="icofont icofont-travelling"></i></span>
+          <span class="pcoded-mtext">Regularizations Requests</span>
+        </a>
+      </li>  
+    {% endif %}
+
+    </ul>
+    {% url 'head_hr_list' as head_hr_list %}
+    {% url 'emp_attendance_list' as emp_attendance_list %}
+    <ul class="pcoded-item pcoded-left-item">
+      <li class="pcoded-hasmenu
+      {% if request.path == head_hr_list %}active pcoded-trigger{% endif %}
+      {% if request.path == emp_attendance_list %}active pcoded-trigger{% endif %}">
+        <a href="javascript:void(0)">
+          <span class="pcoded-micon"><i class="icofont icofont-ui-user-group"></i></span>
+          <span class="pcoded-mtext">Employees</span>
+          <span class="pcoded-badge label label-warning">{{ total_count }}</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li class="{% if request.path == head_hr_list %}active{% endif %}">
+            <a href="{{ head_hr_list }}"><span class="pcoded-mtext">Employees List</span></a>
+          </li>
+        <li class="{% if request.path == emp_attendance_list %}active{% endif %}">
+          <a href="{{ emp_attendance_list }}"><span class="pcoded-mtext">Employees Attendance</span></a>
+        </li>
+      </ul>
+      </li>
+    </ul>
+    <div class="pcoded-navigatio-lavel">Company Shift Timings</div>
+
+    <ul class="pcoded-item pcoded-left-item">
+      {% url 'add_shift_timing' as add_shift_timing %}
+      {% url 'shift_timing' as shift_timing %}
+      {% url 'add_holidays' as add_holidays %}
+      <li class="pcoded-hasmenu 
+      {% if request.path == add_shift_timing %}active pcoded-trigger{% endif %}
+      {% if request.path == shift_timing %}active pcoded-trigger{% endif %}
+      {% if request.path == add_holidays %}active pcoded-trigger{% endif %}">
+        <a href="javascript:void(0)">
+          <span class="pcoded-micon"><i class="icofont icofont-clock-time"></i></span>
+          <span class="pcoded-mtext">Shift Timing</span>
+          <span class="pcoded-badge label label-warning">{{ shift_count }}</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li class="{% if request.path == add_shift_timing %}active{% endif %}">
+            <a href="{{ add_shift_timing }}"><span class="pcoded-mtext">Add Shift Timings</span></a>
+          </li>
+          <li class="{% if request.path == shift_timing %}active{% endif %}">
+            <a href="{{ shift_timing }}"><span class="pcoded-mtext">Shift Timings</span></a>
+          </li>
+          <li class="{% if request.path == add_holidays %}active{% endif %}">
+            <a href="{{ add_holidays }}"><span class="pcoded-mtext">Holidays</span></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

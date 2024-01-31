@@ -1,0 +1,164 @@
+{% extends "employee/base_template.html" %}
+
+{% load static %}
+
+{% block main_content %}
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <div class="main-body">
+      <div class="page-wrapper">
+        <div class="page-body">
+          <div class="row">
+            <div class="col-xl-3 col-md-6 col-6">
+              <div class="card bg-c-yellow update-card">
+                <div class="card-block">
+                  <div class="row align-items-end">
+                    <div class="col-8">
+                      <h4 class="text-white">{{leave_balance2.balance}}</h4>
+                      <h6 style="font-size: smaller;" class="text-white m-b-0">{{leave_balance2.leave_type}}</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                      <canvas id="update-chart-1" height="50"></canvas>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-6">
+              <div class="card bg-c-green update-card">
+                <div class="card-block">
+                  <div class="row align-items-end">
+                    <div class="col-8">
+                      <h4 class="text-white">{{leave_balance1.balance}}</h4>
+                      <h6 style="font-size: smaller;" class="text-white m-b-0">{{leave_balance1.leave_type}}</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                      <canvas id="update-chart-2" height="50"></canvas>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-6">
+              <div class="card bg-c-pink update-card">
+                <div class="card-block">
+                  <div class="row align-items-end">
+                    <div class="col-8">
+                      <h4 class="text-white">{{leave_balance3.balance}}</h4>
+                      <h6 style="font-size: smaller;" class="text-white m-b-0">{{leave_balance3.leave_type}}</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                      <canvas id="update-chart-3" height="50"></canvas>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-6">
+              <div class="card bg-c-lite-green update-card">
+                <div class="card-block">
+                  <div class="row align-items-end">
+                    <div class="col-8">
+                      <h4 class="text-white">{{leave_applied}}</h4>
+                      <h6 style="font-size: smaller;" class="text-white m-b-0">Leave Applied</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                      <canvas id="update-chart-4" height="50"></canvas>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Attendance Chart Of {{formatted_date}}</h5>
+                </div>
+                <div class="card-block">
+                  <canvas id="attendance_chart" height="250"></canvas>
+                </div>              
+              </div>
+            </div>
+            <div class="col-xl-8 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Total Details of {{formatted_date}}</h5>
+                </div>
+                <div class="card-block">
+                  <div class="table-responsive">
+                    <table class="table m-0">
+                      <tbody>
+                        <tr>
+                          <th scope="row">Total Working Days</th>
+                          <td>{{total_working_days}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Total Present</th>
+                          <td>{{ total_present }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Total Absent</th>
+                          <td>{{ total_absent }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Total Hrs/Days Worked</th>
+                          <td>{{ total_working_days }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Date Of Joining</th>
+                          <td>{{ emp.date_of_joining }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>              
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+</div>
+{% endblock main_content %}
+
+{% block xtra_js %}
+<script type="text/javascript" src="{% static 'files/assets/pages/dashboard/analytic-dashboard.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    var a =document.getElementById("attendance_chart").getContext("2d");
+    window.myDoughnut = new Chart(a, {
+      type: 'doughnut',
+      data: {
+        datasets: [
+          {
+            data: [{{total_working_days}}, {{total_present}}, {{total_absent}}],
+            backgroundColor: ['#fe9365', '#01a9ac', '#fe5d70'],
+            label: 'Dataset 1'
+          }
+        ],
+        labels: ['Total Working Days', 'Present', 'Absent']
+      },
+      options: {
+        maintainAspectRatio: !1,
+        responsive: !0,
+        legend: {
+          position: 'bottom'
+        },
+        title: {
+          display: !0,
+          text: ''
+        },
+        animation: {
+          animateScale: !0,
+          animateRotate: !0
+        }
+      }
+    })
+  })
+</script>
+{% endblock xtra_js %}

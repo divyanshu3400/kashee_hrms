@@ -1,0 +1,23 @@
+Kashee Milk Producer Company Ltd
+                                      
+Subject: {{subject}}
+
+Date: {{reg.created_at}}
+
+Name: {{emp.admin.first_name}} {{emp.admin.last_name}}                               EMP Code:  KMPCL{{emp.emp_code}}
+Designation: {{emp.designation}}                                                     For Date:  {{reg.start_date}}
+Reporting To: Mr. {{mngr.admin.first_name}} {{mngr.admin.last_name}}
+
+I, {{emp.admin.first_name}} {{emp.admin.last_name}} {{flag}}, {{time}} insteade of {{shift.start_time}} due to 
+{{reg.reason}} 
+
+I request you to please consider my {{reg.regularization_type}} as full day present
+
+
+                                                                                                        {{emp.admin.first_name}} {{emp.admin.last_name}}
+                                                                                                        Signature Of Employee   
+
+Date:{{approval_date}}
+
+Approval: {{status}}            {{amngr.first_name}} {{amngr.last_name}}                      {{ce.first_name}} {{ce.last_name}}
+                                    Reporting Manager                                                     Chief Executive        

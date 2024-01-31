@@ -1,0 +1,357 @@
+{% extends 'employee/base_template.html' %}
+
+{% load static %}
+
+{% block xtra_css %}
+  <style>
+    #selectedFilesList ul li
+    {
+      background-color: ghostwhite;
+      border: gainsboro;
+      border-radius: 5px;
+      margin: 10px;
+      padding-left: 10px;
+    }
+
+    .thumbnail-container {
+      position: relative;
+      overflow: hidden;
+      height: 150px;
+    }
+    
+    .thumbnail-img {
+      width: 100%;
+      object-fit: cover; /* Center crop the image */
+      height: auto;
+      transition: transform 0.3s ease;
+      z-index: 1; /* Ensure the image is on top */
+    }
+    
+    .thumbnail-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency */
+      pointer-events: none; /* Allow clicks to pass through */
+      z-index: 2; /* Place overlay above the image */
+    }
+    
+    .thumbnail-container:hover .thumbnail-img {
+      transform: scale(1.1);
+    }
+    
+    .thumbnail-container:hover .thumbnail-overlay {
+      opacity: 1;
+      pointer-events: auto; /* Enable clicks on hover */
+    }
+    
+    .thumbnail-overlay .card-body {
+      color: #fff;
+      padding: 10px;
+    }
+  </style>
+
+  <link href="{% static 'files/assets/pages/jquery.filer/css/jquery.filer.css' %}" type="text/css" rel="stylesheet" />
+  <link href="{% static 'files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css' %}" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/sweetalert.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/component.css' %}" />
+{% endblock %}
+
+{% block main_content %}
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="page-header">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h4></h4>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href=""><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                      <a href="#!">Tour Details</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="personal" role="tabpanel">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-header-text">Tour Details</h5>
+                      </div>
+                      <div class="card-block">
+                        <div class="view-info">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <div class="general-info">
+                                <div class="row">
+                                  <div class="col-lg-12 col-xl-6">
+                                    <div class="table-responsive">
+                                      <table class="table m-0">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">Title</th>
+                                            <td>{{ tour_details.title }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Start Date</th>
+                                            <td>{{ tour_details.start_date }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Visit</th>
+                                            <td>
+                                              {% if tour_details.is_completed %}
+                                                Completed
+                                              {% else %}
+                                                Uncomplete
+                                              {% endif %}
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-12 col-xl-6">
+                                    <div class="table-responsive">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">Destination</th>
+                                            <td>{{ tour_details.destination }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Estimated End Date</th>
+                                            <td>{{ tour_details.end_date }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Completion Date</th>
+                                            <td>{{ tour_details.completion_date }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="container">
+                          <h6>Message</h6>
+                        </div>
+                        <div class="container">
+                          <p>{{ tour_details.message }}</p>
+                        </div>
+                        
+                      </div>
+                      {% if not tour_expanse %}
+                        <div class="container col-12">
+                          {% if tour_details.is_completed %}
+                            <button type="button" class="btn btn-block btn-dark md-trigger" data-id="{{ tour.id }}" data-modal="modal-11"><i class="icofont icofont-upload-alt"></i>Upload Bill</button>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                      <div class="card-header">
+                        <h5 class="card-header-text">Tour Bill</h5> <hr />
+                        <div class="row">
+                          {% for expense in tour_expanse %}
+                            <div class="col-4 col-md-3 mb-4">
+                              <div class="thumbnail-container">
+                                <img src="{{ expense.bill.url }}" class="thumbnail-img" alt="{{ expense.created_at }}" />
+                                <a href="{{ expense.bill.url }}" target="_blank">
+                                  <div class="thumbnail-overlay">
+                                    <div class="card-body">
+                                      <p class="card-text">
+                                        <strong>Expense Date:</strong><br /> {{ expense.created_at }}<br /><br /><br />
+                                        <strong>Bill:</strong> <br />{{ expense.bill.name }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include 'employee/footer.html' %}
+      <div id="styleSelector"></div>
+    </div>
+  </div>
+  <div class="md-modal md-effect-11" id="modal-11">
+    <div class="md-content">
+      <div class="card border-primary">
+        <div class="card-header">
+          <div class="card-header-right">
+            <ul class="list-unstyled card-option">
+              <li>Upload Your Bill Here!</li>
+              <li>
+                <i class="icofont icofont-close-circled"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="card-block">
+            <input type="file" class="form-control" name="bills" id="fileInput" multiple />
+          </div>
+          <div id="selectedFilesList"></div>
+          <div class="row">
+            <div class="col-4 text-center">
+              <button type="button" id="cancelButton" class="btn btn-danger waves-effect md-close">Cancel</button>
+            </div>
+            <div class="col-4 text-center">
+              <button type="button" id="uploadButton" class="btn btn-dark ">Upload</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block xtra_js %}
+  <script>
+  $(document).ready(function () {
+      var selectedFiles = [];
+      var uploadUrl = "{% url 'emp_upload_bill' %}"
+
+      $('#fileInput').on('change', function () {
+          var files = $(this)[0].files;
+          selectedFiles = selectedFiles.concat([...files]);
+          updateSelectedFilesList();
+      });
+
+      $('#cancelButton').on('click', function () {
+        console.log("Clicked button")
+        selectedFiles =[]
+        updateSelectedFilesList();
+      });
+
+      $('#uploadButton').on('click', function () {
+        var tour_id = {{tour_details.id}};
+        var formData = new FormData();
+        formData.append('tour_id', tour_id);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        for (var i = 0; i < selectedFiles.length; i++) {
+            formData.append('bills', selectedFiles[i]);
+        }
+    
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+    
+        $.ajax({
+            url: uploadUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              window.location.reload()
+            },
+            error: function (error) {
+              window.location.reload()
+            }
+        });
+    });
+    $(document).on('click', '.delete-button', function() {
+      var index = $(this).data('index');
+      deleteImage(index);
+    });
+    function deleteImage(index) {
+      selectedFiles.splice(index, 1); 
+      updateSelectedFilesList();
+    }
+    function updateSelectedFilesList() {
+          var fileList = $('#selectedFilesList ul');
+          if (!fileList.length) {
+              fileList = $('<ul>');
+              $('#selectedFilesList').append(fileList);
+          } else {
+              fileList.empty();
+          }
+          if (selectedFiles.length > 0) {
+            for (var i = 0; i < selectedFiles.length; i++) {
+              var container = `
+                <div>
+                  <div class="row">
+                    <div class="col-2">
+                      <img style="height: 35px; width:auto;" src="https://www.svgrepo.com/show/528240/file-check.svg" alt="file" class="img-fluid">
+                    </div>
+                    <div class="col-7">
+                      <p>${selectedFiles[i].name} - ${formatSize(selectedFiles[i].size)}</p>
+                    </div>
+                    <div class="col-3 text-end">
+                      <button type="button" data-index='${i}' class="btn delete-button btn-outline-danger"><i class="icofont icofont-ui-delete"></i></button>
+                    </div>
+                  </div>
+                </div>`;
+            
+              // Append the container HTML to the file list as a list item
+              fileList.append(`<li>${container}</li>`);
+            }            
+          } else {
+              $('#selectedFilesList').text('No files selected');
+          }
+      }
+
+      function formatSize(size) {
+          var units = ['B', 'KB', 'MB', 'GB', 'TB'];
+          var i = 0;
+          while (size >= 1024 && i < units.length - 1) {
+              size /= 1024;
+              i++;
+          }
+          return size.toFixed(2) + ' ' + units[i];
+      }
+    
+  });
+</script>
+
+  <script src="{% static 'files/assets/pages/jquery.filer/js/jquery.filer.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/filer/custom-filer.js' %}" type="text/javascript"></script>
+  <script src="{% static 'files/assets/pages/filer/jquery.fileuploads.init.js' %}" type="text/javascript"></script>
+
+  <script type="text/javascript" src="{% static 'files/assets/js/sweetalert.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/js/modal.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/js/modalEffects.js' %}"></script>
+  <script type="text/javascript" src="{% static 'files/assets/js/classie.js' %}"></script>
+
+  <script type="text/javascript" src="{% static 'files/assets/pages/dashboard/analytic-dashboard.min.js' %}"></script>
+  <script src="{% static 'files/assets/pages/user-profile.js' %}"></script>
+{% endblock %}

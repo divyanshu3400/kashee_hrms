@@ -1,0 +1,163 @@
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
+from . import views, HeadHrViews, EmployeeViews,SuperAdminViews
+from kashee import settings
+from hrms.SuperAdminViews import AdminRegularizationView
+from hrms.EmployeeViews import EmployeeRegularizationView
+from hrms.HeadHrViews import HeadRegularizationView
+from .views import CustomPasswordResetConfirmView,CustomPasswordResetView
+from .views import CustomPasswordResetView, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, redirect_to_login
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+
+    path('accounts/',include('django.contrib.auth.urls')),
+
+    path('',views.ShowLoginPage,name="show_login"),
+
+    path('logout_user', views.logout_user,name="logout"),
+    path('reset/password', views.forgot_password,name="reset_password"),
+    path('doLogin',views.doLogin,name="do_login"),
+    path('change_password/',views.change_password,name="change_password"),
+    path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('password_reset_done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('password_reset_complete/', redirect_to_login, name='password_reset_complete'),
+
+
+    # super admin views
+    path('sadmin/home',SuperAdminViews.super_admin_home,name="super_admin_home"),
+    path('sadmin/profile',SuperAdminViews.super_admin_profile,name="super_admin_profile"),
+    path('sadmin/enroll/hr', SuperAdminViews.enroll_head_hr , name='admin_enroll_hr'),
+    path('sadmin/edit/hr/<int:hr_id>/<int:role_id>', SuperAdminViews.edit_hr , name='admin_edit_hr'),
+    path('sadmin/delete/hr/<int:hr_id>/<int:role_id>', SuperAdminViews.delete_hr , name='admin_delete_hr'),
+    path('sadmin/enroll/rm', SuperAdminViews.enroll_employee , name='admin_enroll_rm'),
+    path('sadmin/enroll/head/hr', SuperAdminViews.enroll_head_hr , name='admin_enroll_head_hr'),
+    path('sadmin/list/employees', SuperAdminViews.hr_list , name='admin_hr_list'),
+    path('sadmin/edit/emps/<int:hr_id>/<int:role_id>', SuperAdminViews.edit_hr , name='admin_edit_hr'),
+    path('sadmin/emp/profile/<int:hr_id>/<int:role_id>', SuperAdminViews.view_attendance , name='admin_view_emp_profile'),
+    path('sadmin/delete/hr/<int:hr_id>/<int:role_id>', SuperAdminViews.delete_hr , name='admin_delete_hr'),    
+    path('sadmin/enroll-hr/edit/<int:hr_id>', SuperAdminViews.enroll_head_hr , name='admin_enroll_hr_edit'),
+    path('sadmin/shift-timing/add/', SuperAdminViews.add_shift_timing, name='admin_add_shift_timing'),
+    path('sadmin/shift-timing/edit/<int:pk>', SuperAdminViews.edit_shift_timing, name='admin_edit_shift_timing'),
+    path('sadmin/shift-timing', SuperAdminViews.shift_timing, name='admin_shift_timing'),
+    path('sadmin/shift-timing/delete/<int:pk>/', SuperAdminViews.delete_shift, name='admin_delete_shift'),
+    path('sadmin/requested/leaves', SuperAdminViews.admin_requested_leaves , name='admin_requested_leaves'),
+    path('sadmin/requested/tours', SuperAdminViews.admin_requested_tours , name='admin_requested_tour'),
+    path('sadmin/approve/leave/<int:leave_id>/<int:marked_by>/<int:role_id>', SuperAdminViews.approves_leaves , name='admin_approve_leaves'),
+    path('sadmin/reject/leave/<int:leave_id>/<int:marked_by>/<int:role_id>', SuperAdminViews.reject_leaves , name='admin_reject_leaves'),
+    path('sadmin/approve/tour/<int:tour_id>', SuperAdminViews.approves_tour , name='admin_approve_tour'),
+    path('sadmin/reject/tour/<int:tour_id>', SuperAdminViews.reject_tour , name='admin_reject_tour'),
+    path('sadmin_ind_emp_events/<int:role_id>/<int:employee_id>/', SuperAdminViews.get_emp_events , name='sadmin_ind_emp_events'),
+    path('sadmin/update-logo', SuperAdminViews.update_logo , name='sadmin_update_logo'),
+    path('sadmin/view/tour/<int:tour_id>', SuperAdminViews.admin_view_tour , name='admin_view_tour'),
+    path('sadmin/attendance', SuperAdminViews.my_attend , name='admin_attendance'),
+    # holidays
+    path('sadmin/holidays/edit/<int:holiday_id>', SuperAdminViews.edit_holidays , name='admin_edit_holiday'),
+    path('sadmin/holidays', SuperAdminViews.add_holidays, name='admin_add_holidays'),
+    path('sadmin/shift-timing/delete/<int:pk>/', SuperAdminViews.delete_holidays, name='admin_delete_shift'),
+    path('sadmin/change_password', SuperAdminViews.change_password , name='admin_change_password'),
+    path('sadmin/requested/regs/', SuperAdminViews.req_regularization , name='admin_requested_regs'),
+    path('sadmin/regularization/<int:regularization_id>/', AdminRegularizationView.as_view(), name='admin_regularization_form'),
+
+    
+    # head hr path
+    path('home/head/hr',HeadHrViews.hrhead_home,name="hrhead_home"),
+    path('home/head/dashboard',HeadHrViews.dashboard,name="hrhead_dashboard"),
+    path('hr/head/mark/attendance', HeadHrViews.mark_attendance , name='head_mark_attendance'),
+    path('hr/head/check-out', HeadHrViews.mark_check_out , name='head_mark_checkout'),
+    path('hr/head/check-in/', HeadHrViews.mark_check_in , name='head_mark_checkin'),
+    path('hr/head/mark/attendance/save', HeadHrViews.save_headhr_attend , name='save_headhr_attend'),
+    path('hr/head/profile',HeadHrViews.hrhead_profile,name="hrhead_profile"),
+    path('enroll/hr', HeadHrViews.enroll_hr , name='enroll_hr'),
+    path('head/list/employees', HeadHrViews.hr_list , name='head_hr_list'),
+    path('headhr/edit/emps/<int:hr_id>/<int:role_id>', HeadHrViews.edit_hr , name='head_edit_hr'),
+    path('headhr/emp/profile/<int:hr_id>/<int:role_id>', HeadHrViews.view_attendance , name='head_view_emp_profile'),
+    path('headhr/delete/hr/<int:hr_id>/<int:role_id>', HeadHrViews.delete_hr , name='head_delete_hr'),
+    path('headhr/enroll/rm', HeadHrViews.enroll_employee , name='head_enroll_rm'),
+    path('enroll-hr/edit/<int:hr_id>', HeadHrViews.enroll_hr , name='enroll_hr_edit'),
+    path('shift-timing/add/', HeadHrViews.add_shift_timing, name='add_shift_timing'),
+    path('shift-timing/edit/<int:pk>', HeadHrViews.edit_shift_timing, name='edit_shift_timing'),
+    path('shift-timing', HeadHrViews.shift_timing, name='shift_timing'),
+    path('shift-timing/delete/<int:pk>/', HeadHrViews.delete_shift, name='delete_shift'),
+    path('head/apply/leaves', HeadHrViews.apply_leaves , name='head_apply_leaves'),
+    path('head/apply/tour', HeadHrViews.add_tour , name='head_apply_tours'),
+    path('head/tours', HeadHrViews.tours, name='head_applied_tour'),
+    path('head/upload/tour-bill', HeadHrViews.upload_bill, name='head_upload_bill'),
+    path('head/edit/tour/<int:tour_id>/', HeadHrViews.edit_tour, name='head_edit_tour'),
+    path('head/complete/tour/<int:tour_id>/', HeadHrViews.mark_complete, name='head_complete_tour'),
+    path('head/view/tour/<int:tour_id>/', HeadHrViews.view_tour, name='head_view_tour'),
+    path('head/delete/tour/<int:tour_id>/', HeadHrViews.delete_tour, name='head_delete_tour'),
+    path('head_get_events/', HeadHrViews.get_events , name='head_get_events'),
+    path('ind_emp_events/<int:role_id>/<int:employee_id>/', HeadHrViews.get_emp_events , name='ind_emp_events'),
+    path('head/leaves', HeadHrViews.leaves , name='head_leaves'),
+    path('head/approve/leave/<int:leave_id>/<int:marked_by>', HeadHrViews.approves_leaves , name='rm_approve_leaves'),
+    path('head/reject/leave/<int:leave_id>/<int:marked_by>', HeadHrViews.reject_leaves , name='rm_reject_leaves'),
+    path('head/delete/leave/<int:leave_id>', HeadHrViews.delete , name='head_delete_leaves'),
+    path('head/recall/leave/<int:leave_id>', HeadHrViews.delete , name='head_recall_leaves'),
+    path('head/cancel/leave/<int:leave_id>', HeadHrViews.cancel_leave , name='head_cancel_leave'),
+    path('head/attendance', HeadHrViews.my_attend , name='head_attendance'),
+    path('head/requested/leaves', HeadHrViews.admin_requested_leaves , name='head_requested_leaves'),
+    path('head/requested/tours', HeadHrViews.admin_requested_tours , name='head_requested_tour'),
+    path('head/request/tours', HeadHrViews.requested_tours , name='rmhead_requested_tour'),
+    path('head/request/regs', HeadHrViews.req_regularization , name='rmhead_requested_regs'),
+    path('head/request/leave', HeadHrViews.requested_leaves , name='rmhead_requested_leave'),
+    path('head/regularization/<int:regularization_id>/', HeadRegularizationView.as_view(), name='rm_head_regularization_form'),
+    path('headhr/change_password', HeadHrViews.change_password , name='headhr_change_password'),
+    path('holidays/edit/<int:hr_id>', HeadHrViews.edit_holidays , name='enroll_hr_edit'),
+    path('holidays', HeadHrViews.add_holidays, name='add_holidays'),
+    path('shift-timing/delete/<int:pk>/', HeadHrViews.delete_holidays, name='delete_shift'),
+    path('headhr/apply/tour', HeadHrViews.add_tour, name='headhr_apply_tour'),
+    path('headhr/tours', HeadHrViews.tours, name='headhr_tours'),
+    path('headhr/edit/<int:tour_id>/', HeadHrViews.edit_tour, name='headhr_edit_tour'),
+    path('headhr/emp-attendance', HeadHrViews.emp_attendance_list, name='emp_attendance_list'),    
+    path('headhr/delete/<int:tour_id>/', HeadHrViews.delete_tour, name='headhr_delete_tour'),
+    path("headhr/regularization/<str:start_date>/<str:end_date>/<str:working_hrs>", HeadHrViews.regularization_create , name="headhr_regularize"),
+    path("headhr/regularization", HeadHrViews.regularization_list , name="headhr_regularization_list"),
+    path("headhr/regularizations/edit/<int:pk>", HeadHrViews.regularization_edit , name="headhr_regularization_edit"),
+    path('headhr/update/image/', HeadHrViews.update_profile , name='headhr_update_image'),
+    path("headhr/regularizations/delete/<int:pk>", HeadHrViews.regularization_delete , name="headhr_regularization_delete"),
+    
+    # employee URl path  requested_leaves
+    path('employee/dashboard', EmployeeViews.employee_home, name="employee_home"),
+    path('employee/profile', EmployeeViews.employee_profile, name="employee_profile"),
+    path('employee/apply/leaves', EmployeeViews.apply_leaves , name='emp_apply_leaves'),
+    path('emp/attendance', EmployeeViews.employee_attend , name='emp_attendance'),
+    path('emp/leaves', EmployeeViews.leaves , name='emp_leaves'),
+    path('emp/requested/leaves', EmployeeViews.requested_leaves , name='requested_leaves'),
+    path('emp/approve/leave/<int:leave_id>/<int:marked_by>', EmployeeViews.approves_leaves , name='rm_approve_leaves'),
+    path('emp/reject/leave/<int:leave_id>/<int:marked_by>', EmployeeViews.reject_leaves , name='rm_reject_leaves'),
+    path('emp/delete/leave/<int:leave_id>', EmployeeViews.delete , name='rm_delete_leaves'),
+    path('emp/recall/leave/<int:leave_id>', EmployeeViews.delete , name='emp_recall_leaves'),
+    path('emp/cancel/leave/<int:leave_id>', EmployeeViews.cancel_leave , name='emp_cancel_leave'),
+    path('emp/edit/leave/<int:leave_id>', EmployeeViews.edit_leave , name='rm_edit_leave'),
+    path('emp_get_events', EmployeeViews.get_events , name='emp_get_events'),
+    path('emp/change_password', EmployeeViews.change_password , name='emp_change_password'),
+    path('emp/apply/tour', EmployeeViews.add_tour, name='emp_apply_tour'),
+    path('emp/tours', EmployeeViews.tours, name='emp_tours'),
+    path('emp/upload/tour-bill', EmployeeViews.upload_bill, name='emp_upload_bill'),
+    path('emp/edit/tour/<int:tour_id>/', EmployeeViews.edit_tour, name='emp_edit_tour'),
+    path('emp/complete/tour/<int:tour_id>/', EmployeeViews.mark_complete, name='emp_complete_tour'),
+    path('emp/view/tour/<int:tour_id>/', EmployeeViews.view_tour, name='emp_view_tour'),
+    path('emp/delete/tour/<int:tour_id>/', EmployeeViews.delete_tour, name='emp_delete_tour'),
+    path('emp/mark/attendance', EmployeeViews.mark_attendance , name='emp_mark_attendance'),
+    path('emp/check-out', EmployeeViews.mark_check_out , name='emp_mark_checkout'),
+    path('emp/check-in/', EmployeeViews.mark_check_in , name='emp_mark_checkin'),
+    path('emp/attendance/save', EmployeeViews.save_headhr_attend , name='save_emp_attend'),
+    path("emp/regularization/<str:start_date>/<str:end_date>/<str:working_hrs>", EmployeeViews.regularization_create , name="emp_regularize"),
+    path("emp/regularizations", EmployeeViews.regularization_list , name="emp_regularization_list"),
+    path("emp/regularizations/edit/<int:pk>", EmployeeViews.regularization_edit , name="emp_regularization_edit"),
+    path("emp/regularizations/delete/<int:pk>", EmployeeViews.regularization_delete , name="emp_regularization_delete"),
+    path('emp/requested/regs/', EmployeeViews.req_regularization , name='remp_req_regularization'),
+    path('emp/update/image/', EmployeeViews.update_profile , name='emp_update_image'),
+    path('emp/regularization/<int:regularization_id>/', EmployeeRegularizationView.as_view(), name='remp_regularization_form'),
+    
+
+    # path('index', views.home, name="index"),
+    path('notify', views.notification_test_page, name="notify"),
+
+
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

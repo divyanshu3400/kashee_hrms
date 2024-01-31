@@ -1,0 +1,12 @@
+Subject: {{subject}}
+
+Dear Sir,
+
+I hope this email finds you well. I am going on tours to {{destination}} from {{tour.start_date}} to {{end_date}} , total days {{days}}.
+
+Thank you for your assistance.
+
+Best regards,
+{{emp.admin.first_name}} {{emp.admin.last_name}}
+{{emp.designation}}
+{{emp.admin.email}}

@@ -1,0 +1,28 @@
+                                         Kashee Milk Producer Company Ltd
+                                      
+Subject: {{subject}}
+
+Date: {{leave.updated_at}}
+
+Name: {{emp.admin.first_name}} {{emp.admin.last_name}}
+Designation: {{emp.designation}}
+Reporting To: Mr. {{mngr.admin.first_name}} {{mngr.admin.last_name}}
+
+I, {{emp.admin.first_name}} {{emp.admin.last_name}} would like to avail {{days}} day/days leave
+from {{leave.start_date}} to {{leave.end_date}}. 
+
+
+Leave type applied for: {{leave.leave_type}}:                   Leave Balance:      CL: {{cl.balance}}     SL: {{sl.balance}}      EL: {{el.balance}}
+                                                                       
+Purpose of leave: {{leave.reason}}
+
+I request you to grant me leave for the above period.
+
+
+                                                                                                        {{emp.admin.first_name}} {{emp.admin.last_name}}
+                                                                                                        Signature Of Employee   
+
+Date:{{approval_date}}
+
+Approval: {{status}}                                                                 {{mngr.admin.first_name}} {{mngr.admin.last_name}}
+                                                                                            Reporting Manager        

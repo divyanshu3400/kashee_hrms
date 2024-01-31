@@ -1,0 +1,24 @@
+Subject: {{subject}}
+
+Dear {{emp.admin.first_name}},
+
+I trust this email finds you well.
+
+I am writing to inform you that your recent tour request has been reviewed and {{status}}. The details of your {{status}} tour are as follows:
+
+Desitnation: {{tour.destination}}
+Tour Start Date: {{tour.start_date}}
+Tour End Date: {{tour.end_date}}
+Purpose of Tour: {{tour.purpose}}
+
+Your proposed tour has been duly considered, and I appreciate your timely submission of the request.
+
+Should you need any further clarification or have any concerns, please feel free to reach out to me.
+
+Thank you for your understanding, and I wish you a productive and successful tour.
+
+Best regards,
+
+{{mngr.admin.first_name}}
+{{mngr.designation.last_name}}
+Kashee Milk Producer Company
